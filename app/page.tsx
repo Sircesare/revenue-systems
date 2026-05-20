@@ -478,7 +478,6 @@ const Hero = () => {
       <div className="relative container-tight">
         {/* CENTERED HEADLINE */}
         <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-block"><Tag>v1.0 · Operational infrastructure</Tag></div>
 
           <h1 className="font-display font-medium text-[clamp(38px,6vw,76px)] leading-[1.04] mt-6 text-white tracking-tight">
             Operational revenue infrastructure
@@ -708,7 +707,7 @@ const TrustPain = () => (
     <div className="container-tight">
       <div className="grid lg:grid-cols-[1fr,1.6fr] gap-10 lg:gap-12 mb-12">
         <div>
-          <Tag>The diagnosis</Tag>
+
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Revenue leaks every hour you're not watching.
           </h2>
@@ -918,7 +917,7 @@ const DayInLife = () => (
 
       <div className="relative h-full container-tight flex flex-col justify-end pb-12 lg:pb-14">
         <div className="max-w-3xl">
-          <Tag tone="gold">A day in the life</Tag>
+  
           <h2 className="font-display font-medium text-[clamp(32px,4.5vw,58px)] leading-[1.04] mt-5 text-white tracking-tight">
             Your phone rings 40 times.<br />
             <span style={{ color: "var(--gold-soft)" }}>You answer twelve</span>.
@@ -950,7 +949,7 @@ const AfterBooking = () => {
       <div className="container-tight">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
           <div>
-            <Tag>After you book</Tag>
+
             <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
               What happens next.
             </h2>
@@ -1160,7 +1159,7 @@ const LivePipeline = () => {
       <div className="container-tight">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
           <div>
-            <Tag>Operational view</Tag>
+  
             <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
               One command center.
             </h2>
@@ -1353,7 +1352,7 @@ const WhyLoseRevenue = () => {
       <div className="container-tight">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
           <div>
-            <Tag tone="gold">The bleed</Tag>
+  
             <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
               You're not losing deals on price. You're losing them on silence.
             </h2>
@@ -1433,7 +1432,7 @@ const SystemSpecs = () => (
   <section className="relative section-y border-t border-[var(--border)]">
     <div className="container-tight">
       <div className="text-center mb-12">
-        <div className="inline-block"><Tag>Built in</Tag></div>
+
         <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
           How the system runs.
         </h2>
@@ -1845,7 +1844,7 @@ const FinalCTA = () => (
     </div>
 
     <div className="relative container-narrow text-center">
-      <div className="inline-block"><Tag>The close</Tag></div>
+  
       <h2 className="font-display font-medium text-[clamp(36px,5.5vw,72px)] leading-[1.04] text-white mt-7 tracking-tight">
         Your business needs <span style={{ color: "var(--blue-soft)" }}>systems</span> —
         <br />not more chaos.
