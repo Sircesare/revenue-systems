@@ -1,4 +1,5 @@
 "use client";
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -13,24 +14,21 @@ import {
 } from "lucide-react";
 
 /* ============================================================
-   DESIGN SYSTEM — tokens + global styles
-   Now with broader background palette for section rhythm
+   DESIGN SYSTEM
    ============================================================ */
 const FontStyle = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Inter:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
 
     :root {
-      /* dark backgrounds — varied for rhythm */
       --bg-primary:   #07090F;
       --bg-secondary: #0B1020;
-      --bg-warm-dark: #0F1426;   /* slightly warmer navy with amber undertone */
-      --bg-slate:     #131A2C;   /* warmer slate-navy for transition sections */
+      --bg-warm-dark: #0F1426;
+      --bg-slate:     #131A2C;
       --surface:      #111827;
       --elevated:     #1A2333;
 
-      /* light contrast section */
-      --bg-light:        #E8ECF3;   /* soft slate, not pure white */
+      --bg-light:        #E8ECF3;
       --bg-light-2:      #F1F4F9;
       --surface-light:   #FFFFFF;
       --border-light:    #CBD5E1;
@@ -63,6 +61,10 @@ const FontStyle = () => (
       --warning:      #F59E0B;
       --error:        #EF4444;
       --info:         #06B6D4;
+
+      /* Desktop rhythm */
+      --section-pad-mobile: 4rem;   /* 64px */
+      --section-pad-desk:   5.5rem; /* 88px - tighter than 96 */
     }
 
     html, body { background: var(--bg-primary); }
@@ -71,6 +73,17 @@ const FontStyle = () => (
     .font-body    { font-family: 'Inter', sans-serif; }
     .font-metric  { font-family: 'Barlow Condensed', sans-serif; font-feature-settings: "tnum"; }
     .font-mono    { font-family: 'Geist Mono', monospace; }
+
+    /* Section padding system — tighter desktop rhythm */
+    .section-y { padding-top: var(--section-pad-mobile); padding-bottom: var(--section-pad-mobile); }
+    @media (min-width: 1024px) {
+      .section-y { padding-top: var(--section-pad-desk); padding-bottom: var(--section-pad-desk); }
+    }
+
+    /* Container variants — desktop framing */
+    .container-tight { max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; }
+    .container-narrow { max-width: 64rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; }
+    .container-text { max-width: 48rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; }
 
     .dot-grid {
       background-image: radial-gradient(circle, rgba(148,163,184,0.08) 1px, transparent 1px);
@@ -118,6 +131,13 @@ const FontStyle = () => (
         0 0 0 1px var(--border-light),
         0 20px 50px -25px rgba(15,23,42,0.18);
     }
+    .glow-hero-dashboard {
+      box-shadow:
+        0 0 0 1px var(--border-strong),
+        0 40px 100px -30px rgba(37,99,235,0.45),
+        0 20px 60px -20px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
 
     .hairline-h { background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
 
@@ -140,10 +160,7 @@ const FontStyle = () => (
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     }
 
-    /* photo treatments */
-    .photo-treatment {
-      filter: brightness(0.85) contrast(1.05) saturate(0.95);
-    }
+    .photo-treatment { filter: brightness(0.85) contrast(1.05) saturate(0.95); }
     .photo-overlay-dark {
       background: linear-gradient(135deg, rgba(7,9,15,0.55) 0%, rgba(15,20,38,0.4) 50%, rgba(7,9,15,0.85) 100%);
     }
@@ -179,10 +196,10 @@ const TagLight = ({ children, tone = "blue" }) => (
 );
 
 const DemoNote = ({ className = "" }) => (
-  <div className={`flex items-center gap-2 mt-3 ${className}`}>
+  <div className={`flex items-center justify-center gap-2 mt-3 ${className}`}>
     <div className="w-1 h-1 rounded-full bg-[var(--text-4)]" />
     <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-4)]">
-      Demo interface shown for illustration · final setup is customized to each business
+      Demo interface · final setup customized per business
     </span>
   </div>
 );
@@ -206,21 +223,11 @@ const useCounter = (target, inView, duration = 1600) => {
 };
 
 /* ============================================================
-   PHOTO PLACEHOLDERS
-   IMPORTANT: swap these src URLs with your own photos before launch
-   Currently using free Unsplash photos as scaffolding.
+   PHOTO PLACEHOLDERS — replace before launch
    ============================================================ */
 const PHOTO_OPERATOR_PHONE = "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80";
-// Suggested replacement: contractor/owner on phone outside a truck or on a jobsite
-
 const PHOTO_JOBSITE = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1800&q=80";
-// Suggested replacement: wide jobsite shot — roof, crew, or service truck in driveway
-
 const PHOTO_TABLET_OPERATOR = "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1400&q=80";
-// Suggested replacement: operator/owner using tablet or phone reviewing schedule
-
-const PHOTO_TRUCK_CREW = "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1400&q=80";
-// Suggested replacement: service truck or small crew arriving at a home
 
 /* ============================================================
    NAV
@@ -267,7 +274,8 @@ const Nav = () => (
 );
 
 /* ============================================================
-   HERO
+   HERO — RESTRUCTURED for desktop
+   Centered headline + showcase dashboard below
    ============================================================ */
 const HERO_EVENTS = [
   { icon: Phone, color: "var(--blue-soft)", label: "Inbound call captured", meta: "Roofing inquiry · routed", time: "now" },
@@ -302,6 +310,146 @@ const Sparkline = () => {
   );
 };
 
+const HeroDashboard = ({ feed, paused, setPaused }) => (
+  <div className="relative rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] glow-hero-dashboard overflow-hidden">
+    {/* topbar */}
+    <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] bg-[var(--elevated)]/60">
+      <div className="flex items-center gap-3">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-[var(--border-strong)]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[var(--border-strong)]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[var(--success)]" />
+        </div>
+        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-3)]">
+          command · pipeline
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold-bright)] pulse-dot" />
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--gold-soft)]">demo</span>
+        </span>
+        <button
+          onClick={() => setPaused((p) => !p)}
+          className="text-[var(--text-3)] hover:text-white transition"
+          aria-label={paused ? "Resume demo" : "Pause demo"}
+        >
+          {paused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+        </button>
+      </div>
+    </div>
+
+    {/* TWO-COLUMN LAYOUT for desktop: metrics+sparkline left | activity feed right */}
+    <div className="grid lg:grid-cols-[1.3fr,1fr]">
+      {/* LEFT: metrics + sparkline + mini pipeline */}
+      <div className="border-b lg:border-b-0 lg:border-r border-[var(--border)]">
+        <div className="grid grid-cols-3 border-b border-[var(--border)]">
+          {[
+            { l: "Inbound today",  v: "47", d: "live" },
+            { l: "Avg response",   v: "11", u: "s", d: "automated" },
+            { l: "Booked / wk",    v: "23", d: "tracked" },
+          ].map((m, i) => (
+            <div key={i} className={`p-4 ${i < 2 ? "border-r border-[var(--border)]" : ""}`}>
+              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--text-4)]">{m.l}</div>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="font-metric font-semibold text-[26px] text-white leading-none">{m.v}</span>
+                {m.u && <span className="font-metric text-[14px] text-[var(--text-3)]">{m.u}</span>}
+              </div>
+              <div className="font-mono text-[10px] text-[var(--text-3)] mt-1">{m.d}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Sparkline strip */}
+        <div className="px-4 py-3 border-b border-[var(--border)] flex items-center justify-between">
+          <div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--text-4)]">Lead flow · 14d</div>
+            <div className="font-metric font-semibold text-[18px] text-white mt-0.5 leading-none">Trending up</div>
+          </div>
+          <Sparkline />
+        </div>
+
+        {/* Mini pipeline */}
+        <div className="p-4 bg-[var(--bg-secondary)]/40">
+          <div className="flex items-center justify-between mb-2">
+            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">
+              Pipeline view
+            </div>
+            <div className="font-mono text-[10px] text-[var(--text-3)]">5 stages</div>
+          </div>
+          <div className="grid grid-cols-5 gap-2">
+            {[
+              { l: "New",   v: 8,  c: "var(--blue-soft)" },
+              { l: "Qual",  v: 14, c: "var(--info)" },
+              { l: "Est",   v: 6,  c: "var(--blue)" },
+              { l: "Sched", v: 11, c: "var(--warning)" },
+              { l: "Won",   v: 8,  c: "var(--success)" },
+            ].map((s, i) => (
+              <div key={i}>
+                <div className="h-1 rounded-full bg-[var(--bg-primary)] overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${s.v * 7}%` }}
+                    transition={{ duration: 1.1, delay: 0.3 + i * 0.08, ease: "easeOut" }}
+                    className="h-full"
+                    style={{ background: s.c }}
+                  />
+                </div>
+                <div className="font-mono text-[9px] text-[var(--text-4)] uppercase mt-1.5">{s.l}</div>
+                <div className="font-metric text-[16px] font-semibold text-white leading-none mt-0.5">{s.v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT: activity feed */}
+      <div className="p-3">
+        <div className="flex items-center justify-between mb-2 px-1">
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">
+            Activity stream
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)] pulse-dot" />
+            <span className="font-mono text-[10px] text-[var(--text-3)]">streaming</span>
+          </div>
+        </div>
+        <div className="space-y-2 h-[260px] overflow-hidden">
+          <AnimatePresence initial={false}>
+            {feed.map((idx, pos) => {
+              const ev = HERO_EVENTS[idx];
+              const Icon = ev.icon;
+              return (
+                <motion.div
+                  key={`${idx}-${pos}`}
+                  layout
+                  initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                  animate={{ opacity: 1 - pos * 0.28, y: 0, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex items-center gap-3 p-2.5 rounded-lg border border-[var(--border)] bg-[var(--elevated)]/70"
+                >
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
+                    style={{ background: `color-mix(in srgb, ${ev.color} 15%, transparent)`, border: `1px solid color-mix(in srgb, ${ev.color} 30%, transparent)` }}>
+                    <Icon className="w-3.5 h-3.5" style={{ color: ev.color }} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-body font-medium text-[12.5px] text-white truncate">{ev.label}</div>
+                    <div className="font-mono text-[10px] text-[var(--text-4)] uppercase tracking-wider truncate">
+                      {ev.meta}
+                    </div>
+                  </div>
+                  <div className="font-mono text-[10px] text-[var(--text-4)]">{ev.time}</div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const Hero = () => {
   const [feed, setFeed] = useState([0, 1, 2]);
   const [paused, setPaused] = useState(false);
@@ -318,7 +466,7 @@ const Hero = () => {
   }, [paused]);
 
   return (
-    <section id="top" className="relative pt-32 pb-20 overflow-hidden navy-wash grain">
+    <section id="top" className="relative pt-32 pb-16 lg:pt-36 lg:pb-20 overflow-hidden navy-wash grain">
       <div className="absolute inset-0 dot-grid opacity-50" />
       <div className="absolute inset-x-0 bottom-0 h-px hairline-h" />
 
@@ -327,31 +475,31 @@ const Hero = () => {
       <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-20 pointer-events-none"
         style={{ background: "radial-gradient(circle, var(--gold-glow), transparent 70%)" }} />
 
-      <div className="relative mx-auto max-w-7xl px-6 grid lg:grid-cols-[1.05fr,1fr] gap-14 items-center">
-        <div>
-          <Tag>v1.0 · Operational infrastructure</Tag>
+      <div className="relative container-tight">
+        {/* CENTERED HEADLINE */}
+        <div className="text-center max-w-4xl mx-auto">
+          <div className="inline-block"><Tag>v1.0 · Operational infrastructure</Tag></div>
 
-          <h1 className="font-display font-medium text-[clamp(40px,6.5vw,82px)] leading-[1.02] mt-6 text-white tracking-tight">
-            Operational revenue
+          <h1 className="font-display font-medium text-[clamp(38px,6vw,76px)] leading-[1.04] mt-6 text-white tracking-tight">
+            Operational revenue infrastructure
             <br />
-            infrastructure for
-            <br />
+            for{" "}
             <span className="relative inline-block">
               local operators
-              <svg className="absolute -bottom-3 left-0 w-full" height="6" viewBox="0 0 300 6" preserveAspectRatio="none">
+              <svg className="absolute -bottom-2 left-0 w-full" height="6" viewBox="0 0 300 6" preserveAspectRatio="none">
                 <path d="M0 3 Q 75 0, 150 3 T 300 3" stroke="var(--blue)" strokeWidth="2" fill="none" />
               </svg>
             </span>
             .
           </h1>
 
-          <p className="font-body text-[17px] leading-[1.6] text-[var(--text-2)] mt-7 max-w-xl">
+          <p className="font-body text-[16px] lg:text-[18px] leading-[1.6] text-[var(--text-2)] mt-7 max-w-2xl mx-auto">
             We install automated systems that help local service businesses capture
             inbound leads, respond faster, recover missed calls, automate follow-up,
             and manage opportunities in one pipeline.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 mt-9">
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-9">
             <a href="#cta"
                className="group inline-flex items-center gap-2 font-body font-medium text-[14px] text-white bg-[var(--blue)] hover:bg-[var(--blue-hover)] px-5 py-3.5 rounded-lg transition-all hover:shadow-[0_0_30px_-5px_var(--blue-glow-2)]">
               Book a Demo
@@ -364,7 +512,7 @@ const Hero = () => {
             </a>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-10 text-[var(--text-3)] font-mono text-[10px] uppercase tracking-[0.2em]">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mt-8 text-[var(--text-3)] font-mono text-[10px] uppercase tracking-[0.2em]">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[var(--blue-soft)]" />
               7-day install
@@ -380,143 +528,22 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Dashboard mockup */}
-        <div className="relative">
+        {/* DASHBOARD SHOWCASE — below the fold of the headline */}
+        <div className="relative mt-14 lg:mt-20 max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] glow-card overflow-hidden"
+            transition={{ duration: 0.9, delay: 0.2 }}
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] bg-[var(--elevated)]/60">
-              <div className="flex items-center gap-3">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[var(--border-strong)]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[var(--border-strong)]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[var(--success)]" />
-                </div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-3)]">
-                  command · pipeline
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold-bright)] pulse-dot" />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--gold-soft)]">demo</span>
-                </span>
-                <button
-                  onClick={() => setPaused((p) => !p)}
-                  className="text-[var(--text-3)] hover:text-white transition"
-                  aria-label={paused ? "Resume demo" : "Pause demo"}
-                >
-                  {paused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-[1fr,1fr,1fr,auto] border-b border-[var(--border)]">
-              {[
-                { l: "Inbound today",  v: "47", d: "live" },
-                { l: "Avg response",   v: "11", u: "s", d: "automated" },
-                { l: "Booked / wk",    v: "23", d: "tracked" },
-              ].map((m, i) => (
-                <div key={i} className="p-4 border-r border-[var(--border)]">
-                  <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--text-4)]">{m.l}</div>
-                  <div className="flex items-baseline gap-1 mt-1">
-                    <span className="font-metric font-semibold text-[28px] text-white leading-none">{m.v}</span>
-                    {m.u && <span className="font-metric text-[16px] text-[var(--text-3)]">{m.u}</span>}
-                  </div>
-                  <div className="font-mono text-[10px] text-[var(--text-3)] mt-1">{m.d}</div>
-                </div>
-              ))}
-              <div className="p-4 flex items-center justify-center">
-                <Sparkline />
-              </div>
-            </div>
-
-            <div className="p-3 space-y-2 h-[228px] overflow-hidden">
-              <div className="flex items-center justify-between mb-1 px-1">
-                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">
-                  Activity stream
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)] pulse-dot" />
-                  <span className="font-mono text-[10px] text-[var(--text-3)]">streaming</span>
-                </div>
-              </div>
-              <AnimatePresence initial={false}>
-                {feed.map((idx, pos) => {
-                  const ev = HERO_EVENTS[idx];
-                  const Icon = ev.icon;
-                  return (
-                    <motion.div
-                      key={`${idx}-${pos}`}
-                      layout
-                      initial={{ opacity: 0, y: -10, scale: 0.98 }}
-                      animate={{ opacity: 1 - pos * 0.28, y: 0, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="flex items-center gap-3 p-2.5 rounded-lg border border-[var(--border)] bg-[var(--elevated)]/70"
-                    >
-                      <div className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0"
-                        style={{ background: `color-mix(in srgb, ${ev.color} 15%, transparent)`, border: `1px solid color-mix(in srgb, ${ev.color} 30%, transparent)` }}>
-                        <Icon className="w-3.5 h-3.5" style={{ color: ev.color }} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-body font-medium text-[12.5px] text-white truncate">{ev.label}</div>
-                        <div className="font-mono text-[10px] text-[var(--text-4)] uppercase tracking-wider truncate">
-                          {ev.meta}
-                        </div>
-                      </div>
-                      <div className="font-mono text-[10px] text-[var(--text-4)]">{ev.time}</div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </div>
-
-            <div className="border-t border-[var(--border)] p-4 bg-[var(--bg-secondary)]/40">
-              <div className="flex items-center justify-between mb-2">
-                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">
-                  Pipeline view
-                </div>
-                <div className="font-mono text-[10px] text-[var(--text-3)]">
-                  5 stages tracked
-                </div>
-              </div>
-              <div className="grid grid-cols-5 gap-2">
-                {[
-                  { l: "New",   v: 8,  c: "var(--blue-soft)" },
-                  { l: "Qual",  v: 14, c: "var(--info)" },
-                  { l: "Est",   v: 6,  c: "var(--blue)" },
-                  { l: "Sched", v: 11, c: "var(--warning)" },
-                  { l: "Won",   v: 8,  c: "var(--success)" },
-                ].map((s, i) => (
-                  <div key={i}>
-                    <div className="h-1 rounded-full bg-[var(--bg-primary)] overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${s.v * 7}%` }}
-                        transition={{ duration: 1.1, delay: 0.3 + i * 0.08, ease: "easeOut" }}
-                        className="h-full"
-                        style={{ background: s.c }}
-                      />
-                    </div>
-                    <div className="font-mono text-[9px] text-[var(--text-4)] uppercase mt-1.5">{s.l}</div>
-                    <div className="font-metric text-[18px] font-semibold text-white leading-none mt-0.5">{s.v}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <HeroDashboard feed={feed} paused={paused} setPaused={setPaused} />
           </motion.div>
 
-          <DemoNote />
-
+          {/* floating auto-response card — positioned over dashboard edge */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6, duration: 0.7 }}
-            className="absolute -left-4 lg:-left-12 top-[42%] hidden md:block"
+            transition={{ delay: 0.8, duration: 0.7 }}
+            className="absolute -left-4 lg:-left-16 top-[35%] hidden md:block z-10"
           >
             <div className="rounded-xl border border-[var(--border-strong)] bg-[var(--surface)]/95 backdrop-blur-xl p-3 w-[220px] glow-card">
               <div className="flex items-center gap-2 mb-2">
@@ -537,6 +564,8 @@ const Hero = () => {
               </div>
             </div>
           </motion.div>
+
+          <DemoNote />
         </div>
       </div>
     </section>
@@ -555,7 +584,7 @@ const ProofBar = () => {
   ];
   return (
     <section className="relative border-y border-[var(--border)] bg-[var(--bg-secondary)]/30 py-8">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="container-tight">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--text-3)] flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--blue-soft)] pulse-dot" />
@@ -581,43 +610,41 @@ const ProofBar = () => {
 };
 
 /* ============================================================
-   NEW SECTION — BUILT FOR REAL OPERATORS  (photo + warm copy)
+   BUILT FOR REAL OPERATORS — tighter photo crop on desktop
    ============================================================ */
 const BuiltForRealOperators = () => (
-  <section className="relative py-24 warm-wash overflow-hidden">
-    {/* warm gold ambient glow */}
+  <section className="relative section-y warm-wash overflow-hidden">
     <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full opacity-10 pointer-events-none"
          style={{ background: "radial-gradient(circle, var(--gold-bright), transparent 60%)" }} />
 
-    <div className="mx-auto max-w-7xl px-6 relative">
-      <div className="grid lg:grid-cols-[1.1fr,1fr] gap-12 items-center">
-        {/* Copy side */}
+    <div className="container-tight relative">
+      <div className="grid lg:grid-cols-[1.2fr,1fr] gap-10 lg:gap-14 items-center">
         <div>
           <Tag tone="gold">Built for real operators</Tag>
-          <h2 className="font-display font-medium text-[clamp(32px,4.2vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.8vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             For the owners answering the phone <span style={{ color: "var(--gold-soft)" }}>from the truck</span>.
           </h2>
-          <p className="font-body text-[17px] text-[var(--text-2)] mt-7 leading-[1.65] max-w-xl">
+          <p className="font-body text-[16px] lg:text-[17px] text-[var(--text-2)] mt-6 leading-[1.65] max-w-xl">
             You're running estimates in the morning, leading a crew in the afternoon,
             and answering "can someone come look at my roof?" between every other thing.
             Your phone never stops. Three calls come in while you're on a ladder.
             One of them doesn't get a callback until tomorrow — and by then they've
             already hired your competitor.
           </p>
-          <p className="font-body text-[17px] text-[var(--text-2)] mt-4 leading-[1.65] max-w-xl">
+          <p className="font-body text-[16px] lg:text-[17px] text-[var(--text-2)] mt-4 leading-[1.65] max-w-xl">
             This system isn't built for tech companies. It's built for the owner
             who's been on his own back-end since day one — and finally needs the
             response, follow-up, and tracking off his plate.
           </p>
 
-          <div className="grid sm:grid-cols-2 gap-3 mt-9 max-w-xl">
+          <div className="grid sm:grid-cols-2 gap-3 mt-8 max-w-xl">
             {[
               { icon: PhoneMissed, t: "The calls you miss",  d: "Get answered automatically — even on the job." },
               { icon: Clock,       t: "The follow-up gap",    d: "Closed by a sequence that doesn't forget." },
               { icon: FileText,    t: "The estimates",        d: "Sent, tracked, and reminded — without you chasing." },
               { icon: Smartphone,  t: "The whole operation",  d: "Visible on your phone from anywhere." },
             ].map((b, i) => (
-              <div key={i} className="flex items-start gap-3 p-4 rounded-lg border border-[var(--border)] bg-[var(--surface)]/70 backdrop-blur">
+              <div key={i} className="flex items-start gap-3 p-3.5 rounded-lg border border-[var(--border)] bg-[var(--surface)]/70 backdrop-blur">
                 <div className="w-9 h-9 rounded-lg bg-[var(--elevated)] border border-[var(--border-strong)] flex items-center justify-center flex-shrink-0">
                   <b.icon className="w-4 h-4 text-[var(--gold-soft)]" strokeWidth={1.8} />
                 </div>
@@ -630,9 +657,9 @@ const BuiltForRealOperators = () => (
           </div>
         </div>
 
-        {/* Photo side */}
+        {/* Photo — tighter aspect on desktop */}
         <div className="relative">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-[var(--border-strong)] glow-card">
+          <div className="relative aspect-[4/5] lg:aspect-[3/4] rounded-2xl overflow-hidden border border-[var(--border-strong)] glow-card">
             <img
               src={PHOTO_OPERATOR_PHONE}
               alt="Local service business owner on phone"
@@ -640,19 +667,17 @@ const BuiltForRealOperators = () => (
             />
             <div className="absolute inset-0 photo-overlay-warm" />
 
-            {/* floating quote card */}
-            <div className="absolute bottom-6 left-6 right-6 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-primary)]/85 backdrop-blur-xl p-5">
-              <Quote className="w-5 h-5 text-[var(--gold-soft)] mb-2" />
-              <div className="font-display text-[16px] text-white leading-[1.4]">
+            <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-primary)]/85 backdrop-blur-xl p-4">
+              <Quote className="w-4 h-4 text-[var(--gold-soft)] mb-2" />
+              <div className="font-display text-[14px] lg:text-[15px] text-white leading-[1.4]">
                 "I was missing calls every single day and had no idea what was in the
                 pipeline. That's the part that was actually costing me money."
               </div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)] mt-3">
+              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--text-4)] mt-3">
                 — every local operator we've talked to
               </div>
             </div>
 
-            {/* corner accent */}
             <div className="absolute top-4 left-4 flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-[var(--bg-primary)]/80 backdrop-blur border border-[var(--border)]">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold-bright)] pulse-dot" />
               <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--gold-soft)]">
@@ -667,7 +692,7 @@ const BuiltForRealOperators = () => (
 );
 
 /* ============================================================
-   SECTION — TRUST / PAIN
+   TRUST / PAIN
    ============================================================ */
 const PAINS = [
   { icon: PhoneMissed, t: "Missed calls",    d: "Inbound calls go unanswered during job hours and on weekends." },
@@ -679,17 +704,17 @@ const PAINS = [
 ];
 
 const TrustPain = () => (
-  <section className="relative py-24 slate-wash">
-    <div className="mx-auto max-w-7xl px-6">
-      <div className="grid lg:grid-cols-[1fr,1.6fr] gap-12 mb-14">
+  <section className="relative section-y slate-wash">
+    <div className="container-tight">
+      <div className="grid lg:grid-cols-[1fr,1.6fr] gap-10 lg:gap-12 mb-12">
         <div>
           <Tag>The diagnosis</Tag>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Revenue leaks every hour you're not watching.
           </h2>
         </div>
         <div className="self-end">
-          <p className="font-body text-[16px] text-[var(--text-2)] leading-relaxed max-w-xl">
+          <p className="font-body text-[15px] lg:text-[16px] text-[var(--text-2)] leading-relaxed max-w-xl">
             Many local businesses lose opportunities through missed calls, delayed
             responses, and inconsistent follow-up. The problem usually isn't demand —
             it's the gap between when an opportunity arrives and when anything
@@ -721,13 +746,12 @@ const TrustPain = () => (
         ))}
       </div>
 
-      {/* Reframe — gold moment */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="mt-16 p-10 lg:p-14 rounded-2xl border border-[var(--border-strong)] bg-gradient-to-br from-[var(--surface)] to-[var(--bg-secondary)] relative overflow-hidden"
+        className="mt-14 p-9 lg:p-12 rounded-2xl border border-[var(--border-strong)] bg-gradient-to-br from-[var(--surface)] to-[var(--bg-secondary)] relative overflow-hidden"
       >
         <div className="absolute right-0 top-0 w-[500px] h-[500px] opacity-15"
           style={{ background: "radial-gradient(circle, var(--gold-bright), transparent 60%)" }} />
@@ -735,7 +759,7 @@ const TrustPain = () => (
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--gold-bright)] mb-4">
             The reframe
           </div>
-          <p className="font-display font-medium text-[clamp(26px,3.5vw,46px)] leading-[1.15] text-white max-w-4xl tracking-tight">
+          <p className="font-display font-medium text-[clamp(24px,3.2vw,40px)] leading-[1.15] text-white max-w-4xl tracking-tight">
             Most local businesses don't have a <span className="text-[var(--text-4)]">lead</span> problem.
             They have a <span style={{ color: "var(--gold-bright)" }}>systems</span> problem.
           </p>
@@ -746,7 +770,7 @@ const TrustPain = () => (
 );
 
 /* ============================================================
-   SECTION — WHAT THE SYSTEM DOES
+   WHAT THE SYSTEM DOES
    ============================================================ */
 const FEATURES = [
   { icon: Zap,           t: "Instant Lead Response",    d: "Every form, call, and DM gets a personal reply automatically — 24/7." },
@@ -796,12 +820,12 @@ const FeatureCard = ({ f, i }) => (
 );
 
 const WhatItDoes = () => (
-  <section id="system" className="relative py-24 border-t border-[var(--border)]">
-    <div className="mx-auto max-w-7xl px-6">
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
+  <section id="system" className="relative section-y border-t border-[var(--border)]">
+    <div className="container-tight">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
         <div>
           <Tag>The system</Tag>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Eight layers working in sync.
           </h2>
         </div>
@@ -819,7 +843,7 @@ const WhatItDoes = () => (
 );
 
 /* ============================================================
-   SECTION — HOW IT WORKS
+   HOW IT WORKS
    ============================================================ */
 const HowItWorks = () => {
   const steps = [
@@ -829,11 +853,11 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="relative py-24 border-t border-[var(--border)] navy-wash">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center mb-14">
+    <section className="relative section-y border-t border-[var(--border)] navy-wash">
+      <div className="container-narrow">
+        <div className="text-center mb-12">
           <div className="inline-block"><Tag>How it works</Tag></div>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Three stages. One outcome.
           </h2>
         </div>
@@ -877,11 +901,11 @@ const HowItWorks = () => {
 };
 
 /* ============================================================
-   PHOTO STRIP — A DAY IN THE LIFE (wide photo, overlay copy)
+   DAY IN THE LIFE — shorter on desktop
    ============================================================ */
 const DayInLife = () => (
   <section className="relative">
-    <div className="relative h-[440px] md:h-[520px] overflow-hidden">
+    <div className="relative h-[400px] md:h-[460px] lg:h-[480px] overflow-hidden">
       <img
         src={PHOTO_JOBSITE}
         alt="Local service business jobsite"
@@ -889,18 +913,17 @@ const DayInLife = () => (
       />
       <div className="absolute inset-0 photo-overlay-dark" />
 
-      {/* warm light beam from upper right */}
       <div className="absolute -top-20 -right-20 w-[600px] h-[600px] rounded-full opacity-30 pointer-events-none"
            style={{ background: "radial-gradient(circle, var(--gold-warm), transparent 60%)" }} />
 
-      <div className="relative h-full mx-auto max-w-7xl px-6 flex flex-col justify-end pb-14">
+      <div className="relative h-full container-tight flex flex-col justify-end pb-12 lg:pb-14">
         <div className="max-w-3xl">
           <Tag tone="gold">A day in the life</Tag>
-          <h2 className="font-display font-medium text-[clamp(34px,5vw,64px)] leading-[1.02] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(32px,4.5vw,58px)] leading-[1.04] mt-5 text-white tracking-tight">
             Your phone rings 40 times.<br />
             <span style={{ color: "var(--gold-soft)" }}>You answer twelve</span>.
           </h2>
-          <p className="font-body text-[16px] md:text-[17px] text-[var(--text-2)] mt-6 max-w-2xl leading-[1.6]">
+          <p className="font-body text-[15px] md:text-[16px] lg:text-[17px] text-[var(--text-2)] mt-6 max-w-2xl leading-[1.6]">
             That's not a complaint — that's what it looks like to run a real business.
             You can't be on the ladder and on the phone at the same time.
             That's exactly the gap this system was built to close.
@@ -912,7 +935,7 @@ const DayInLife = () => (
 );
 
 /* ============================================================
-   SECTION — WHAT HAPPENS AFTER YOU BOOK
+   AFTER BOOKING
    ============================================================ */
 const AfterBooking = () => {
   const steps = [
@@ -923,12 +946,12 @@ const AfterBooking = () => {
   ];
 
   return (
-    <section className="relative py-24 border-t border-[var(--border)] slate-wash">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+    <section className="relative section-y border-t border-[var(--border)] slate-wash">
+      <div className="container-tight">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
           <div>
             <Tag>After you book</Tag>
-            <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+            <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
               What happens next.
             </h2>
           </div>
@@ -996,7 +1019,7 @@ const AfterBooking = () => {
 };
 
 /* ============================================================
-   SECTION — CORE AUTOMATIONS WORKFLOW
+   CORE AUTOMATIONS WORKFLOW — narrower frame on desktop
    ============================================================ */
 const CoreAutomations = () => {
   const nodes = [
@@ -1011,14 +1034,14 @@ const CoreAutomations = () => {
   const edges = [[0, 1], [0, 2], [1, 3], [2, 3], [3, 4], [3, 5], [4, 6], [5, 6]];
 
   return (
-    <section id="automations" className="relative py-24 border-t border-[var(--border)] overflow-hidden">
+    <section id="automations" className="relative section-y border-t border-[var(--border)] overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] opacity-20 pointer-events-none"
         style={{ background: "radial-gradient(50% 50% at 50% 50%, var(--blue-glow), transparent)" }} />
 
-      <div className="mx-auto max-w-7xl px-6 relative">
-        <div className="text-center mb-12">
+      <div className="container-narrow relative">
+        <div className="text-center mb-10">
           <div className="inline-block"><Tag>Core automations</Tag></div>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             The infrastructure under the hood.
           </h2>
           <p className="font-body text-[15px] text-[var(--text-3)] mt-4 max-w-xl mx-auto">
@@ -1100,7 +1123,7 @@ const CoreAutomations = () => {
 };
 
 /* ============================================================
-   SECTION — LIVE PIPELINE / DASHBOARD
+   LIVE PIPELINE — constrained max width
    ============================================================ */
 const SAMPLE_LEADS = [
   { name: "Maria G.",    src: "Google",   value: 8400,  city: "El Monte" },
@@ -1133,12 +1156,12 @@ const LivePipeline = () => {
   );
 
   return (
-    <section id="pipeline" className="relative py-24 border-t border-[var(--border)]">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+    <section id="pipeline" className="relative section-y border-t border-[var(--border)]">
+      <div className="container-tight">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
           <div>
             <Tag>Operational view</Tag>
-            <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+            <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
               One command center.
             </h2>
           </div>
@@ -1148,7 +1171,7 @@ const LivePipeline = () => {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] overflow-hidden glow-card">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] overflow-hidden glow-card">
           <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--border)] bg-[var(--elevated)]/60">
             <div className="flex items-center gap-3">
               <div className="flex gap-1.5">
@@ -1176,7 +1199,7 @@ const LivePipeline = () => {
               <div key={i} className={`p-5 ${i < 3 ? "md:border-r" : ""} ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b md:border-b-0" : ""} border-[var(--border)]`}>
                 <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--text-4)]">{m.l}</div>
                 <div className="flex items-baseline gap-2 mt-2">
-                  <span className="font-metric font-semibold text-[34px] text-white leading-none">{m.v}</span>
+                  <span className="font-metric font-semibold text-[32px] text-white leading-none">{m.v}</span>
                 </div>
                 <div className="font-mono text-[10px] text-[var(--text-3)] mt-1">{m.sub}</div>
               </div>
@@ -1255,7 +1278,7 @@ const LivePipeline = () => {
 };
 
 /* ============================================================
-   SECTION — INDUSTRIES
+   INDUSTRIES
    ============================================================ */
 const INDUSTRIES = [
   { icon: Home,      t: "Roofing",      d: "Insurance · retail · repair" },
@@ -1269,12 +1292,12 @@ const INDUSTRIES = [
 ];
 
 const Industries = () => (
-  <section id="industries" className="relative py-24 border-t border-[var(--border)] slate-wash">
-    <div className="mx-auto max-w-7xl px-6">
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+  <section id="industries" className="relative section-y border-t border-[var(--border)] slate-wash">
+    <div className="container-tight">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
         <div>
           <Tag>Built for</Tag>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Operators who actually do the work.
           </h2>
         </div>
@@ -1304,8 +1327,8 @@ const Industries = () => (
         ))}
       </div>
 
-      <div className="mt-10 p-6 rounded-xl border border-[var(--border)] bg-[var(--surface)]/40 text-center">
-        <p className="font-body text-[15px] text-[var(--text-2)] max-w-3xl mx-auto leading-relaxed">
+      <div className="mt-10 p-6 rounded-xl border border-[var(--border)] bg-[var(--surface)]/40 text-center max-w-3xl mx-auto">
+        <p className="font-body text-[15px] text-[var(--text-2)] leading-relaxed">
           If your business depends on inbound calls, estimates, appointments, or
           follow-up, this system can be configured around your workflow.
         </p>
@@ -1315,7 +1338,7 @@ const Industries = () => (
 );
 
 /* ============================================================
-   SECTION — WHY BUSINESSES LOSE REVENUE
+   WHY LOSE REVENUE
    ============================================================ */
 const WhyLoseRevenue = () => {
   const principles = [
@@ -1326,20 +1349,20 @@ const WhyLoseRevenue = () => {
   ];
 
   return (
-    <section className="relative py-24 border-t border-[var(--border)] warm-wash">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid lg:grid-cols-2 gap-14 items-start">
+    <section className="relative section-y border-t border-[var(--border)] warm-wash">
+      <div className="container-tight">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
           <div>
             <Tag tone="gold">The bleed</Tag>
-            <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+            <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
               You're not losing deals on price. You're losing them on silence.
             </h2>
-            <p className="font-body text-[16px] text-[var(--text-2)] mt-8 leading-relaxed">
+            <p className="font-body text-[15px] lg:text-[16px] text-[var(--text-2)] mt-7 leading-relaxed">
               The owner-operator running ops, sales, and field work simultaneously
               cannot be the response system. Calls get missed. Texts go unanswered.
               Estimates sit unopened in a thread that's already buried.
             </p>
-            <p className="font-body text-[16px] text-[var(--text-2)] mt-4 leading-relaxed">
+            <p className="font-body text-[15px] lg:text-[16px] text-[var(--text-2)] mt-4 leading-relaxed">
               The work isn't hard. It's constant. And constant doesn't belong to a
               person — it belongs to a system.
             </p>
@@ -1353,12 +1376,12 @@ const WhyLoseRevenue = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-6 rounded-xl border border-[var(--border)] bg-gradient-to-br from-[var(--surface)] to-[var(--bg-secondary)] relative overflow-hidden"
+                className="p-5 lg:p-6 rounded-xl border border-[var(--border)] bg-gradient-to-br from-[var(--surface)] to-[var(--bg-secondary)] relative overflow-hidden"
               >
                 <div className="absolute inset-0 opacity-30 pointer-events-none"
                   style={{ background: "radial-gradient(80% 80% at 0% 0%, var(--gold-glow), transparent 60%)" }} />
                 <div className="relative">
-                  <div className="font-metric font-bold text-[26px] leading-[1.05] tracking-tight" style={{ color: "var(--gold-bright)" }}>
+                  <div className="font-metric font-bold text-[24px] leading-[1.05] tracking-tight" style={{ color: "var(--gold-bright)" }}>
                     {s.p}
                   </div>
                   <div className="font-body text-[13px] text-[var(--text-3)] mt-3 leading-relaxed">{s.d}</div>
@@ -1373,7 +1396,7 @@ const WhyLoseRevenue = () => {
 };
 
 /* ============================================================
-   SECTION — SYSTEM SPECS
+   SYSTEM SPECS
    ============================================================ */
 const Spec = ({ value, suffix, label, sub, animate = true, target }) => {
   const ref = useRef(null);
@@ -1396,9 +1419,9 @@ const Spec = ({ value, suffix, label, sub, animate = true, target }) => {
         <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--blue-soft)]">
           {label}
         </div>
-        <div className="font-metric font-semibold text-[64px] text-white leading-none mt-2 tracking-tight">
+        <div className="font-metric font-semibold text-[60px] text-white leading-none mt-2 tracking-tight">
           {display}
-          {suffix && <span className="text-[var(--text-3)] text-[40px]">{suffix}</span>}
+          {suffix && <span className="text-[var(--text-3)] text-[36px]">{suffix}</span>}
         </div>
         <div className="font-body text-[13.5px] text-[var(--text-3)] mt-3 leading-relaxed">{sub}</div>
       </div>
@@ -1407,11 +1430,11 @@ const Spec = ({ value, suffix, label, sub, animate = true, target }) => {
 };
 
 const SystemSpecs = () => (
-  <section className="relative py-24 border-t border-[var(--border)]">
-    <div className="mx-auto max-w-7xl px-6">
-      <div className="text-center mb-14">
+  <section className="relative section-y border-t border-[var(--border)]">
+    <div className="container-tight">
+      <div className="text-center mb-12">
         <div className="inline-block"><Tag>Built in</Tag></div>
-        <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+        <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
           How the system runs.
         </h2>
         <p className="font-body text-[15px] text-[var(--text-3)] mt-4 max-w-xl mx-auto">
@@ -1434,7 +1457,7 @@ const SystemSpecs = () => (
 );
 
 /* ============================================================
-   SECTION — MOBILE APP
+   MOBILE APP
    ============================================================ */
 const MobileApp = () => {
   const [screen, setScreen] = useState(0);
@@ -1444,22 +1467,22 @@ const MobileApp = () => {
   }, []);
 
   return (
-    <section className="relative py-24 border-t border-[var(--border)] overflow-hidden navy-wash">
+    <section className="relative section-y border-t border-[var(--border)] overflow-hidden navy-wash">
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[700px] h-[700px] opacity-20 pointer-events-none"
         style={{ background: "radial-gradient(circle, var(--blue-glow-2), transparent 60%)" }} />
 
-      <div className="mx-auto max-w-7xl px-6 grid lg:grid-cols-2 gap-14 items-center relative">
+      <div className="container-tight grid lg:grid-cols-2 gap-10 lg:gap-14 items-center relative">
         <div>
           <Tag>Mobile</Tag>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Run the operation from the truck.
           </h2>
-          <p className="font-body text-[16px] text-[var(--text-2)] mt-6 leading-relaxed max-w-lg">
+          <p className="font-body text-[15px] lg:text-[16px] text-[var(--text-2)] mt-6 leading-relaxed max-w-lg">
             The whole system in your pocket. Approve replies. Move leads. Send estimates.
             See exactly what's happening — without opening a laptop.
           </p>
 
-          <div className="mt-8 space-y-3">
+          <div className="mt-7 space-y-3">
             {[
               { icon: Bell,          t: "Push notifications",  d: "Every new lead, every reply, every booking — in real time." },
               { icon: MessageSquare, t: "Reply from anywhere", d: "Two-way SMS without using your personal number." },
@@ -1480,7 +1503,7 @@ const MobileApp = () => {
 
         <div className="flex flex-col items-center">
           <div className="relative">
-            <div className="relative w-[300px] h-[610px] rounded-[44px] bg-[#06070d] border-[10px] border-[#13182a] shadow-[0_30px_80px_-20px_rgba(37,99,235,0.4)]">
+            <div className="relative w-[280px] lg:w-[300px] h-[570px] lg:h-[610px] rounded-[44px] bg-[#06070d] border-[10px] border-[#13182a] shadow-[0_30px_80px_-20px_rgba(37,99,235,0.4)]">
               <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full bg-black z-10" />
               <div className="relative w-full h-full rounded-[34px] overflow-hidden bg-[var(--bg-primary)]">
                 <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[10px] text-white font-mono">
@@ -1506,7 +1529,7 @@ const MobileApp = () => {
                   </div>
                 </div>
 
-                <div className="px-5 relative h-[480px]">
+                <div className="px-5 relative h-[440px] lg:h-[480px]">
                   <AnimatePresence mode="wait">
                     {screen === 0 && (
                       <motion.div key="p0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.4 }}>
@@ -1603,7 +1626,7 @@ const MobileApp = () => {
             <div className="absolute -inset-6 rounded-[60px] -z-10 opacity-50"
               style={{ background: "radial-gradient(circle, var(--blue-glow), transparent 70%)" }} />
           </div>
-          <DemoNote className="justify-center" />
+          <DemoNote />
         </div>
       </div>
     </section>
@@ -1611,29 +1634,26 @@ const MobileApp = () => {
 };
 
 /* ============================================================
-   LIGHT SECTION — WHO THIS IS FOR  (soft slate, NOT white)
+   WHO THIS IS FOR — light section
    ============================================================ */
 const WhoThisIsFor = () => (
-  <section className="relative py-24 overflow-hidden" style={{ background: "var(--bg-light)" }}>
+  <section className="relative section-y overflow-hidden" style={{ background: "var(--bg-light)" }}>
     <div className="absolute inset-0 dot-grid-light opacity-60" />
     <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-20 pointer-events-none"
          style={{ background: "radial-gradient(circle, var(--gold-soft), transparent 70%)" }} />
 
-    <div className="relative mx-auto max-w-7xl px-6">
-      <div className="grid lg:grid-cols-[1fr,1.1fr] gap-12 items-center">
-        {/* Photo side */}
+    <div className="relative container-tight">
+      <div className="grid lg:grid-cols-[1fr,1.1fr] gap-10 lg:gap-14 items-center">
         <div className="relative">
-          <div className="relative aspect-[5/6] rounded-2xl overflow-hidden border border-[var(--border-light)] glow-card-light">
+          <div className="relative aspect-[4/5] lg:aspect-[3/4] rounded-2xl overflow-hidden border border-[var(--border-light)] glow-card-light">
             <img
               src={PHOTO_TABLET_OPERATOR}
               alt="Local service business owner reviewing pipeline on phone"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            {/* soft inner light for warmth */}
             <div className="absolute inset-0"
                  style={{ background: "linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.15))" }} />
 
-            {/* small floating stat card */}
             <div className="absolute bottom-5 right-5 p-3 rounded-lg bg-white shadow-lg border border-[var(--border-light)] w-[180px]">
               <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--text-on-light-3)]">
                 Owner view
@@ -1649,15 +1669,14 @@ const WhoThisIsFor = () => (
           </div>
         </div>
 
-        {/* Copy side */}
         <div>
           <TagLight tone="blue">Who this is really for</TagLight>
-          <h2 className="font-display font-medium text-[clamp(32px,4.2vw,52px)] leading-[1.05] mt-5 tracking-tight"
+          <h2 className="font-display font-medium text-[clamp(30px,3.8vw,46px)] leading-[1.08] mt-5 tracking-tight"
               style={{ color: "var(--text-on-light-1)" }}>
             Not for big enterprise teams.<br />
             <span style={{ color: "var(--blue)" }}>For the owner running it all</span>.
           </h2>
-          <p className="font-body text-[17px] mt-7 leading-[1.65] max-w-xl"
+          <p className="font-body text-[16px] lg:text-[17px] mt-7 leading-[1.65] max-w-xl"
              style={{ color: "var(--text-on-light-2)" }}>
             If you're a roofer who answers your own phone, a plumber who texts your
             own estimates, a landscaper whose crew calendar lives in your head — this
@@ -1702,7 +1721,7 @@ const WhoThisIsFor = () => (
 );
 
 /* ============================================================
-   SECTION — PRICING
+   PRICING
    ============================================================ */
 const Pricing = () => {
   const items = [
@@ -1717,11 +1736,11 @@ const Pricing = () => {
   ];
 
   return (
-    <section id="pricing" className="relative py-24 border-t border-[var(--border)] warm-wash">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center mb-12">
+    <section id="pricing" className="relative section-y border-t border-[var(--border)] warm-wash">
+      <div className="container-tight">
+        <div className="text-center mb-10">
           <div className="inline-block"><Tag tone="gold">Founder offer</Tag></div>
-          <h2 className="font-display font-medium text-[clamp(32px,4vw,52px)] leading-[1.05] mt-5 text-white tracking-tight">
+          <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             One install. Everything running.
           </h2>
           <p className="font-body text-[15px] text-[var(--text-3)] mt-4 max-w-xl mx-auto">
@@ -1757,7 +1776,7 @@ const Pricing = () => {
               </p>
 
               <div className="flex items-baseline gap-3 mt-6">
-                <span className="font-metric font-bold text-[88px] text-white leading-none tracking-tight">$800</span>
+                <span className="font-metric font-bold text-[80px] lg:text-[88px] text-white leading-none tracking-tight">$800</span>
                 <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--text-3)]">
                   one-time install
                 </span>
@@ -1767,7 +1786,7 @@ const Pricing = () => {
                 <div>Optional monthly support available after launch.</div>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 mt-8">
+              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5 mt-7">
                 {items.map((it, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "var(--gold-bright)" }} />
@@ -1813,10 +1832,10 @@ const Pricing = () => {
 };
 
 /* ============================================================
-   SECTION — FINAL CTA
+   FINAL CTA
    ============================================================ */
 const FinalCTA = () => (
-  <section id="cta" className="relative py-32 border-t border-[var(--border)] overflow-hidden">
+  <section id="cta" className="relative py-28 lg:py-32 border-t border-[var(--border)] overflow-hidden">
     <div className="absolute inset-0 dot-grid opacity-40" />
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute inset-0 opacity-40"
@@ -1825,18 +1844,18 @@ const FinalCTA = () => (
       <div className="absolute inset-x-0 bottom-0 h-px hairline-h" />
     </div>
 
-    <div className="relative mx-auto max-w-5xl px-6 text-center">
+    <div className="relative container-narrow text-center">
       <div className="inline-block"><Tag>The close</Tag></div>
-      <h2 className="font-display font-medium text-[clamp(40px,6.5vw,88px)] leading-[1.02] text-white mt-8 tracking-tight">
+      <h2 className="font-display font-medium text-[clamp(36px,5.5vw,72px)] leading-[1.04] text-white mt-7 tracking-tight">
         Your business needs <span style={{ color: "var(--blue-soft)" }}>systems</span> —
         <br />not more chaos.
       </h2>
-      <p className="font-body text-[17px] text-[var(--text-2)] mt-8 max-w-2xl mx-auto leading-relaxed">
+      <p className="font-body text-[16px] lg:text-[17px] text-[var(--text-2)] mt-7 max-w-2xl mx-auto leading-relaxed">
         Stop being the response system. Stop being the follow-up system.
         Stop being the part of the business that breaks when you take a day off.
       </p>
 
-      <div className="flex flex-wrap items-center justify-center gap-3 mt-10">
+      <div className="flex flex-wrap items-center justify-center gap-3 mt-9">
         <a href="#pricing"
            className="group inline-flex items-center gap-2 font-body font-medium text-[15px] text-white bg-[var(--blue)] hover:bg-[var(--blue-hover)] px-6 py-4 rounded-lg transition-all hover:shadow-[0_0_40px_-5px_var(--blue-glow-2)]">
           Book a Demo
@@ -1865,7 +1884,7 @@ const FinalCTA = () => (
    ============================================================ */
 const Footer = () => (
   <footer className="border-t border-[var(--border)] bg-[var(--bg-primary)]">
-    <div className="mx-auto max-w-7xl px-6 py-14">
+    <div className="container-tight py-12 lg:py-14">
       <div className="grid md:grid-cols-[2fr,1fr,1fr,1fr] gap-10">
         <div>
           <div className="flex items-center gap-2.5">
