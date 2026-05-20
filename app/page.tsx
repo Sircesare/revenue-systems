@@ -619,7 +619,7 @@ const BuiltForRealOperators = () => (
     <div className="container-tight relative">
       <div className="grid lg:grid-cols-[1.2fr,1fr] gap-10 lg:gap-14 items-center">
         <div>
-          <Tag tone="gold">Built for real operators</Tag>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.8vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             For the owners answering the phone <span style={{ color: "var(--gold-soft)" }}>from the truck</span>.
           </h2>
@@ -823,7 +823,7 @@ const WhatItDoes = () => (
     <div className="container-tight">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
         <div>
-          <Tag>The system</Tag>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Eight layers working in sync.
           </h2>
@@ -855,7 +855,7 @@ const HowItWorks = () => {
     <section className="relative section-y border-t border-[var(--border)] navy-wash">
       <div className="container-narrow">
         <div className="text-center mb-12">
-          <div className="inline-block"><Tag>How it works</Tag></div>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Three stages. One outcome.
           </h2>
@@ -1039,7 +1039,7 @@ const CoreAutomations = () => {
 
       <div className="container-narrow relative">
         <div className="text-center mb-10">
-          <div className="inline-block"><Tag>Core automations</Tag></div>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             The infrastructure under the hood.
           </h2>
@@ -1295,7 +1295,7 @@ const Industries = () => (
     <div className="container-tight">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
         <div>
-          <Tag>Built for</Tag>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Operators who actually do the work.
           </h2>
@@ -1472,7 +1472,7 @@ const MobileApp = () => {
 
       <div className="container-tight grid lg:grid-cols-2 gap-10 lg:gap-14 items-center relative">
         <div>
-          <Tag>Mobile</Tag>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             Run the operation from the truck.
           </h2>
@@ -1669,7 +1669,7 @@ const WhoThisIsFor = () => (
         </div>
 
         <div>
-          <TagLight tone="blue">Who this is really for</TagLight>
+   
           <h2 className="font-display font-medium text-[clamp(30px,3.8vw,46px)] leading-[1.08] mt-5 tracking-tight"
               style={{ color: "var(--text-on-light-1)" }}>
             Not for big enterprise teams.<br />
@@ -1738,7 +1738,7 @@ const Pricing = () => {
     <section id="pricing" className="relative section-y border-t border-[var(--border)] warm-wash">
       <div className="container-tight">
         <div className="text-center mb-10">
-          <div className="inline-block"><Tag tone="gold">Founder offer</Tag></div>
+  
           <h2 className="font-display font-medium text-[clamp(30px,3.6vw,46px)] leading-[1.08] mt-5 text-white tracking-tight">
             One install. Everything running.
           </h2>
