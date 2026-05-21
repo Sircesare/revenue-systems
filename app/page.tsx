@@ -610,7 +610,7 @@ const ProofBar = () => {
     <section className="relative border-y border-[var(--border)] bg-[var(--bg-secondary)]/30 py-8">
       <div className="container-tight">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--text-3)] flex items-center gap-2">
+          <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.25em] text-[var(--text-3)] flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--blue-soft)] pulse-dot" />
             Built for owner-operated local service businesses
           </div>
@@ -621,8 +621,8 @@ const ProofBar = () => {
                   <p.icon className="w-3.5 h-3.5 text-[var(--blue-soft)]" strokeWidth={1.8} />
                 </div>
                 <div className="leading-tight">
-                  <div className="font-body font-medium text-[12.5px] text-white">{p.t}</div>
-                  <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--text-4)] mt-0.5">{p.d}</div>
+                  <div className="font-body font-medium text-[12.5px] lg:text-[15px] text-white">{p.t}</div>
+                  <div className="font-mono text-[9px] lg:text-[11px] uppercase tracking-[0.18em] text-[var(--text-4)] mt-0.5">{p.d}</div>
                 </div>
               </div>
             ))}
