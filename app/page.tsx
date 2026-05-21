@@ -225,9 +225,9 @@ const useCounter = (target, inView, duration = 1600) => {
 /* ============================================================
    PHOTO PLACEHOLDERS — replace before launch
    ============================================================ */
-const PHOTO_OPERATOR_PHONE = "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&q=80";
-const PHOTO_JOBSITE = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1800&q=80";
-const PHOTO_TABLET_OPERATOR = "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1400&q=80";
+const PHOTO_OPERATOR_PHONE = "/photos/operator-phone.jpg";
+const PHOTO_JOBSITE = "/photos/jobsite.jpg";
+const PHOTO_TABLET_OPERATOR = "/photos/tablet-operator.jpg";
 
 /* ============================================================
    NAV
