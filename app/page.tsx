@@ -913,8 +913,8 @@ const HowItWorks = () => {
                 </div>
               </div>
               <div className="text-center mt-6 px-4">
-                <div className="font-display font-medium text-[20px] text-white tracking-tight">{s.t}</div>
-                <p className="font-body text-[14px] text-[var(--text-3)] mt-2 leading-relaxed">{s.d}</p>
+                <div className="font-display font-medium text-[20px] lg:text-[22px] text-white tracking-tight">{s.t}</div>
+                <p className="font-body text-[14px] lg:text-[16px] text-[var(--text-3)] mt-2 leading-relaxed">{s.d}</p>
               </div>
             </motion.div>
           ))}
@@ -1136,8 +1136,8 @@ const CoreAutomations = () => {
             { l: "Adjustable", d: "Any node can be paused, replayed, or rerouted." },
           ].map((x, i) => (
             <div key={i} className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)]/60">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--blue-soft)]">{x.l}</div>
-              <div className="font-body text-[13px] text-[var(--text-3)] mt-1.5">{x.d}</div>
+              <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--blue-soft)]">{x.l}</div>
+              <div className="font-body text-[13px] lg:text-[15px] text-[var(--text-3)] mt-1.5">{x.d}</div>
             </div>
           ))}
         </div>
@@ -1829,16 +1829,16 @@ const Pricing = () => {
 
           <div className="space-y-4">
             <div className="p-6 rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)]/60">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--blue-soft)]">After install</div>
-              <div className="font-display font-medium text-[18px] text-white tracking-tight mt-2">Support & operations</div>
+              <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--blue-soft)]">After install</div>
+              <div className="font-display font-medium text-[18px] lg:text-[20px] text-white tracking-tight mt-2">Support & operations</div>
               <p className="font-body text-[13px] text-[var(--text-3)] mt-2 leading-relaxed">
                 Optional monthly support for ongoing tuning, new automation builds, and
                 operational help. Quoted per business after install.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/60">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">Not sure yet?</div>
-              <div className="font-display font-medium text-[18px] text-white tracking-tight mt-2">See what's included</div>
+              <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--text-4)]">Not sure yet?</div>
+              <div className="font-display font-medium text-[18px] lg:text-[20px] text-white tracking-tight mt-2">See what's included</div>
               <p className="font-body text-[13px] text-[var(--text-3)] mt-2 leading-relaxed">
                 A 15-minute demo walks you through the system and how it would
                 configure around your specific business.
@@ -1929,27 +1929,27 @@ const Footer = () => (
           </p>
         </div>
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">System</div>
+          <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--text-4)]">System</div>
           <ul className="mt-4 space-y-2.5">
-            <li><a href="#system"      className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">The System</a></li>
-            <li><a href="#automations" className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Automations</a></li>
-            <li><a href="#pipeline"    className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Live View</a></li>
-            <li><a href="#industries"  className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Industries</a></li>
+            <li><a href="#system"      className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">The System</a></li>
+            <li><a href="#automations" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Automations</a></li>
+            <li><a href="#pipeline"    className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Live View</a></li>
+            <li><a href="#industries"  className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Industries</a></li>
           </ul>
         </div>
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">Offer</div>
+          <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--text-4)]">Offer</div>
           <ul className="mt-4 space-y-2.5">
-            <li><a href="#pricing" className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Founder Offer</a></li>
-            <li><a href="https://api.leadconnectorhq.com/widget/bookings/jobflowsos-15-minute-demo" target="_blank" rel="noopener noreferrer"     className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Book a Demo</a></li>
-            <li><a href="#cta"     className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Contact</a></li>
+            <li><a href="#pricing" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Founder Offer</a></li>
+            <li><a href="https://api.leadconnectorhq.com/widget/bookings/jobflowsos-15-minute-demo" target="_blank" rel="noopener noreferrer"     className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Book a Demo</a></li>
+            <li><a href="#cta"     className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)]">Legal</div>
+          <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--text-4)]">Legal</div>
           <ul className="mt-4 space-y-2.5">
-            <li><a href="#" className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Privacy</a></li>
-            <li><a href="#" className="font-body text-[13px] text-[var(--text-3)] hover:text-white transition">Terms</a></li>
+            <li><a href="#" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Privacy</a></li>
+            <li><a href="#" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Terms</a></li>
           </ul>
         </div>
       </div>
