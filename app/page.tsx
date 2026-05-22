@@ -1948,8 +1948,8 @@ const Footer = () => (
         <div>
           <div className="font-mono text-[10px] lg:text-[12px] uppercase tracking-[0.22em] text-[var(--text-4)]">Legal</div>
           <ul className="mt-4 space-y-2.5">
-            <li><a href="#" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Privacy</a></li>
-            <li><a href="#" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Terms</a></li>
+            <li><a href="/privacy" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Privacy</a></li>
+            <li><a href="/terms" className="font-body text-[13px] lg:text-[14px] text-[var(--text-3)] hover:text-white transition">Terms</a></li>
           </ul>
         </div>
       </div>
