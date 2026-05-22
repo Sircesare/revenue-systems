@@ -8,6 +8,17 @@ export const metadata: Metadata = {
 export default function TermsOfService() {
   return (
     <main className="min-h-screen bg-black text-white">
+      <header className="border-b border-white/10">
+        <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
+          <a href="/" className="font-display font-medium text-[20px] text-white tracking-tight hover:opacity-80 transition">
+            JobflowsOS
+          </a>
+          <nav className="flex items-center gap-6">
+            <a href="/" className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--text-3)] hover:text-white transition">Home</a>
+            <a href="tel:+16265900148" className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--blue-soft)] hover:text-white transition">(626) 590-0148</a>
+          </nav>
+        </div>
+      </header>
       <div className="max-w-3xl mx-auto px-6 py-16 lg:py-24">
         <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-4)] mb-3">
           Effective Date: May 22, 2026
