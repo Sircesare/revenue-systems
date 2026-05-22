@@ -762,8 +762,8 @@ const TrustPain = () => (
                 <p.icon className="w-4 h-4 text-[var(--text-2)] group-hover:text-[var(--blue-soft)] transition" />
               </div>
               <div className="flex-1">
-                <div className="font-display font-medium text-[17px] text-white tracking-tight">{p.t}</div>
-                <p className="font-body text-[13.5px] text-[var(--text-3)] mt-1.5 leading-relaxed">{p.d}</p>
+                <div className="font-display font-medium text-[17px] lg:text-[19px] text-white tracking-tight">{p.t}</div>
+                <p className="font-body text-[13.5px] lg:text-[15px] text-[var(--text-3)] mt-1.5 leading-relaxed">{p.d}</p>
               </div>
             </div>
           </motion.div>
